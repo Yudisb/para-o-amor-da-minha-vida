@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nossa História de Amor</title>
+    
+    <!-- Importando Fontes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <style>
+        /* ========================================
+         CONFIGURAÇÕES VISUAIS
+         ======================================== */
+        :root {
+            --cor-primaria: #e91e63;
+            --cor-secundaria: #ff80ab;
+            --cor-fundo: #fff0f5;
+            --cor-texto: #4a4a4a;
+            --cor-card: #ffffff;
+            --dourado: #ffd700;
+            --ouro-premium: #daa520;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--cor-fundo);
+            color: var(--cor-texto);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        h1, h2, h3 { font-family: 'Dancing Script', cursive; }
+
+        /* INTRODUÇÃO */
+        #intro {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: linear-gradient(135deg, #fff0f5 0%, #ffc1e3 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .main-title {
+            font-size: 3.5rem;
+            color: var(--cor-primaria);
+            margin-bottom: 20px;
+            animation: fadeInDown 1.5s ease-out;
+            padding: 0 15px;
+            text-shadow: 2px 2px 4px rgba(255,255,255,0.5);
+        }
+
+        .start-btn {
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            background-color: var(--cor-primaria);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(233, 30, 99, 0.3);
+            transition: transform 0.3s;
+            animation: fadeInUp 2s ease-out;
+            margin-top: 20px;
+        }
+        .start-btn:hover { transform: scale(1.05); background-color: #c2185b; }
+
+        /* CONTADOR */
+        #contador-section {
+            padding: 60px 20px;
+            text-align: center;
+            background-color: white;
+            border-bottom: 2px dashed var(--cor-secundaria);
+        }
+
+        .contador-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .contador-box {
+            background: var(--cor-fundo);
+            padding: 15px;
+            border-radius: 15px;
+            min-width: 90px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            border: 1px solid var(--cor-secundaria);
+        }
+        .contador-numero {
+            display: block;
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--cor-primaria);
+        }
+
+        /* TIMELINE */
+        #timeline {
+            position: relative;
+            padding: 80px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        #timeline::after {
+            content: '';
+            position: absolute;
+            width: 4px;
+            background-color: var(--cor-secundaria);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -2px;
+        }
+
+        .timeline-item {
+            padding: 10px 40px;
+            position: relative;
+            width: 50%;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease-out;
+            margin-bottom: 30px;
+        }
+        .timeline-item.visible { opacity: 1; transform: translateY(0); }
+
+        .left { left: 0; }
+        .right { left: 50%; }
+
+        .timeline-item::after {
+            content: '❤️';
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            right: -17px;
+            background-color: white;
+            border: 4px solid var(--cor-primaria);
+            top: 25px;
+            border-radius: 50%;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+        }
+        .right::after { left: -17px; }
+
+        .content {
+            padding: 20px;
+            background-color: var(--cor-card);
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: transform 0.3s;
+            border-bottom: 3px solid var(--cor-primaria);
+        }
+        .content:hover { transform: scale(1.02); }
+
+        .date {
+            color: var(--cor-primaria);
+            font-weight: bold;
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+            display: block;
+            text-transform: uppercase;
+        }
+
+        .memory-img {
+            width: 100%;
+            height: 300px;
+            object-fit: contain;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            display: block;
+            background-color: #ffffff;
+        }
+
+        /* SECÇÃO DO PEDIDO (NOVO) */
+        #proposal-section {
+            padding: 80px 20px;
+            text-align: center;
+            background: linear-gradient(to bottom, #fff0f5, #fff8e1); /* Gradiente suave para dourado */
+            border-top: 2px dashed var(--cor-secundaria);
+            border-bottom: 2px dashed var(--cor-secundaria);
+        }
+
+        .proposal-btn {
+            background-color: var(--ouro-premium);
+            color: white;
+            font-size: 1.5rem;
+            padding: 20px 40px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 0 20px rgba(218, 165, 32, 0.5);
+            animation: pulse 2s infinite;
+            font-family: 'Dancing Script', cursive;
+            transition: transform 0.3s;
+        }
+        
+        .proposal-btn:hover {
+            transform: scale(1.05);
+            background-color: #b8860b;
+        }
+
+        /* VÍDEO MODAL */
+        #videoOverlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.9);
+            display: none; justify-content: center; align-items: center;
+            z-index: 5000;
+        }
+        
+        .video-box {
+            background: #fffbe6;
+            padding: 25px;
+            border-radius: 15px;
+            max-width: 500px; /* Ajuste para formato vertical/celular */
+            width: 95%;
+            text-align: center;
+            border: 3px solid var(--dourado);
+            position: relative;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        video.full-screen-video {
+            width: 100%;
+            max-height: 60vh;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            background: black;
+        }
+
+        /* NOSTALGIA & CARTA */
+        #nostalgia {
+            padding: 80px 20px;
+            background: #fff;
+            text-align: center;
+        }
+
+        .woody-container { margin: 30px auto; }
+        .woody-img { max-width: 200px; border-radius: 15px; animation: bounce 2s infinite; }
+
+        .letter-btn {
+            background-color: var(--cor-primaria);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            border-radius: 30px;
+            cursor: pointer;
+            font-family: 'Montserrat', sans-serif;
+            margin-top: 20px;
+            box-shadow: 0 4px 15px rgba(233, 30, 99, 0.4);
+            transition: all 0.3s;
+        }
+        .letter-btn:hover { transform: scale(1.1); background-color: #c2185b; }
+
+        /* OVERLAY DA CARTA */
+        #letterOverlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(255, 240, 245, 0.98);
+            z-index: 3000; display: none;
+            justify-content: center; align-items: center; padding: 20px;
+        }
+
+        .love-letter {
+            background-color: #fffbe6;
+            border: 2px solid #e91e63;
+            padding: 40px;
+            max-width: 700px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            position: relative;
+            text-align: left;
+        }
+
+        .love-letter::before {
+            content: '💌'; font-size: 50px; position: absolute; top: -25px; left: 50%;
+            transform: translateX(-50%); background: #fffbe6; padding: 0 10px; border-radius: 50%;
+        }
+
+        .letter-text {
+            font-family: 'Dancing Script', cursive; font-size: 1.8rem; color: #555;
+            line-height: 1.8; white-space: pre-wrap;
+        }
+
+        .close-letter {
+            display: block; text-align: center; margin-top: 30px; color: var(--cor-primaria);
+            font-weight: bold; cursor: pointer; font-size: 1.1rem; text-decoration: underline;
+        }
+
+        /* MODAL COMUM (MENSAGENS) */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8); display: none; justify-content: center; align-items: center;
+            z-index: 2000;
+        }
+        .modal-box {
+            background: white; padding: 40px; border-radius: 20px;
+            max-width: 500px; width: 90%; text-align: center;
+        }
+
+        #ending { text-align: center; padding: 100px 20px; }
+        .final-msg { font-size: 3rem; color: var(--cor-primaria); animation: pulse 2s infinite; }
+
+        @media screen and (max-width: 768px) {
+            .main-title { font-size: 2.5rem; }
+            #timeline::after { left: 31px; }
+            .timeline-item { width: 100%; padding-left: 70px; padding-right: 25px; }
+            .timeline-item::after { left: 15px; }
+            .left::after, .right::after { left: 15px; }
+            .right { left: 0%; }
+            .letter-text { font-size: 1.4rem; }
+        }
+
+        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+        @keyframes fadeInDown { from {opacity:0; transform:translateY(-50px);} to {opacity:1; transform:translateY(0);} }
+        @keyframes fadeInUp { from {opacity:0; transform:translateY(50px);} to {opacity:1; transform:translateY(0);} }
+        @keyframes pulse { 0% {transform: scale(1);} 50% {transform: scale(1.05);} 100% {transform: scale(1);} }
+        @keyframes pulse-gold { 0% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.7); } 70% { box-shadow: 0 0 0 15px rgba(255, 215, 0, 0); } 100% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0); } }
+    </style>
+</head>
+<body>
+
+    <!-- INTRO -->
+    <header id="intro">
+        <h1 class="main-title">Nossa História 💕</h1>
+        <p style="font-size: 1.2rem; color: #666;">Cada foto, uma memória inesquecível.</p>
+        <div style="margin-top: 20px;">
+            <button class="start-btn" onclick="scrollToCounter()">Ver há quanto tempo te amo</button>
+        </div>
+    </header>
+
+    <!-- CONTADOR -->
+    <section id="contador-section">
+        <h2 style="color: var(--cor-primaria); font-family: 'Dancing Script'; font-size: 2.5rem; margin-bottom: 20px;">Juntos desde 20 de Junho de 2024</h2>
+        <div class="contador-container">
+            <div class="contador-box"><span class="contador-numero" id="anos">0</span> Anos</div>
+            <div class="contador-box"><span class="contador-numero" id="meses">0</span> Meses</div>
+            <div class="contador-box"><span class="contador-numero" id="dias">0</span> Dias</div>
+            <div class="contador-box"><span class="contador-numero" id="horas">0</span> Horas</div>
+            <div class="contador-box"><span class="contador-numero" id="minutos">0</span> Min</div>
+            <div class="contador-box"><span class="contador-numero" id="segundos">0</span> Seg</div>
+        </div>
+        <div style="margin-top: 30px; font-size: 2rem; cursor: pointer; animation: pulse 2s infinite;" onclick="scrollToTimeline()">⬇️</div>
+    </section>
+
+    <!-- LINHA DO TEMPO -->
+    <section id="timeline">
+        
+        <!-- FOTO 1 e 2: ACADEMIA -->
+        <div class="timeline-item left">
+            <div class="content" onclick="openModal(this)" data-message="Foi aqui que nossos olhares se cruzaram pela primeira vez. Quem diria que a academia me daria o maior presente da vida?">
+                <span class="date">Onde Tudo Começou</span>
+                <img src="foto 1.jpeg" class="memory-img" alt="Academia">
+                <h2>O Início na Academia</h2>
+                <p>O local onde nos vimos e nos falamos pela primeira vez. Entre um treino e outro, nasceu o nosso amor.</p>
+                <p style="font-size: 0.8rem; color: #999;">(Clique para ver uma mensagem)</p>
+            </div>
+        </div>
+
+        <!-- FOTO 3: BOI DE OURO -->
+        <div class="timeline-item right">
+            <div class="content" onclick="openModal(this)" data-message="Tudo ao seu lado é perfeito!">
+                <span class="date">Momentos Deliciosos</span>
+                <img src="foto 3.jpeg" class="memory-img" alt="Boi de Ouro">
+                <h2>Jantar no Boi de Ouro</h2>
+                <p>Foi uma luta tirar uma foto descente nesse dia.</p>
+            </div>
+        </div>
+
+        <!-- FOTO 4: SURPRESA ANA LUIZA -->
+        <div class="timeline-item left">
+            <div class="content" onclick="openModal(this)" data-message="A gente se vira nos 30 e ainda sai rindo. Parceria é isso!">
+                <span class="date">A "Surpresa"</span>
+                <img src="foto 4.jpeg" class="memory-img" alt="Surpresa Ana Luiza">
+                <h2>Missão Ana Luiza</h2>
+                <p>Fomos arrumar a surpresa, tiraram tudo e fizerem do jeito deles.</p>
+            </div>
+        </div>
+
+        <!-- FOTO 5: ALEATÓRIO -->
+        <div class="timeline-item right">
+            <div class="content" onclick="openModal(this)" data-message="Amo seus olhos,espero que nossos filhos,tenha seus olhos .">
+                <span class="date">Simplesmente Nós</span>
+                <img src="foto 5.jpeg" class="memory-img" alt="Momento Aleatório">
+                <h2>O olha mais lindo desse mundo</h2>
+                <p>Os olhos mais bonitos que ja vi nessa terra.</p>
+            </div>
+        </div>
+
+        <!-- FOTO 6: MARUDÁ -->
+        <div class="timeline-item left">
+            <div class="content" onclick="openModal(this)" data-message="A primeira de muitas viagens que ainda faremos pelo mundo.">
+                <span class="date">Pé na Estrada</span>
+                <img src="foto 6.jpg" class="memory-img" alt="Viagem Marudá">
+                <h2>Primeira Viagem: Marudá</h2>
+                <p>Nossa primeira aventura viajando juntos. Onde começamos a descobrir o mundo lado a lado.</p>
+            </div>
+        </div>
+
+        <!-- FOTO 7: SALINAS (DESCANSO) -->
+        <div class="timeline-item right">
+            <div class="content" onclick="openModal(this)" data-message="Aquele momento de paz e descanso ao seu lado.">
+                <span class="date">Relax em Salinas</span>
+                <img src="foto 8.jpeg" class="memory-img" alt="Salinas Descanso">
+                <h2>Aquele Descanso</h2>
+                <p>Momentos de tranquilidade para recarregar as energias. Salinas sempre nos traz boas memórias.</p>
+            </div>
+        </div>
+
+        <!-- FOTO 8: SALINAS (PIZZA) -->
+        <div class="timeline-item left">
+            <div class="content" onclick="openModal(this)" data-message="A pizza era meio caro, mas a sua companhia não tem preço! Hehe.">
+                <span class="date">Final de Ano</span>
+                <img src="foto 7.jpeg" class="memory-img" alt="Salinas Pizza">
+                <h2>A Pizza de Milhões</h2>
+                <p>O jantar com a pizza maravilhosa (mas não muito barata! rs). Histórias que a gente ri depois.</p>
+            </div>
+        </div>
+
+        <!-- FOTO 9: RIO GRANDE DO NORTE (SEREIA) -->
+        <div class="timeline-item right">
+            <div class="content" onclick="openModal(this)" data-message="Você estava deslumbrante, parecia uma sereia de verdade. Te amo!">
+                <span class="date">Paraíso no Nordeste</span>
+                <img src="foto 9.jpeg" class="memory-img" alt="RN Sereia">
+                <h2>Praia calma do Rio Grande do Norte</h2>
+                <p>Praias lindas, mas nada superou sua beleza.</p>
+            </div>
+        </div>
+
+        <!-- FOTO 10: RIO GRANDE DO NORTE (FOFOS) -->
+        <div class="timeline-item left">
+            <div class="content" onclick="openModal(this)" data-message="Momentos simples e cheios de carinho com você.">
+                <span class="date">Nós Dois</span>
+                <img src="foto 10.jpeg" class="memory-img" alt="Nós Fofos">
+                <h2>A Gente Sendo Fofo</h2>
+                <p>E claro, a gente sendo fofo nesse cenário incrível. Amo nossos momentos.</p>
+            </div>
+        </div>
+
+        <!-- FOTO 11: FORTALEZA -->
+        <div class="timeline-item right">
+            <div class="content" onclick="openModal(this)" data-message="A gente se diverte até com estátuas! Hahaha">
+                <span class="date">Beach Park - Fortaleza</span>
+                <img src="foto 11.jpeg" class="memory-img" alt="Beach Park Gorila">
+                <h2>Nós e o Gorila</h2>
+                <p>Em Fortaleza, no Beach Park, vimos esse gorila e eu não resisti. Tive que tirar foto!</p>
+            </div>
+        </div>
+
+        <!-- FOTO 12: CURITIBA -->
+        <div class="timeline-item left">
+            <div class="content" onclick="openModal(this)" data-message="Se eu soubesse o que aconteceria nessa viagem... meu coração já estava batendo diferente.">
+                <span class="date">Curitiba</span>
+                <img src="foto 12.jpeg" class="memory-img" alt="Jardim Botânico Curitiba">
+                <h2>Jardim Botânico</h2>
+                <p>Minha primeira vez no Sul! Mal sabia eu que esse lugar se tornaria o cenário mais especial da nossa história...</p>
+            </div>
+        </div>
+
+        <!-- FOTO 13/14: ENFIM NOIVOS (DIREITA) -->
+        <div class="timeline-item right">
+            <div class="content" onclick="openModal(this)" data-message="Agora é oficial: vamos casar! Te amo demais.">
+                <span class="date">O Grande Sim</span>
+                <img src="foto 14.jpeg" class="memory-img" alt="Enfim Noivos">
+                <h2>Celebrando Nosso Amor</h2>
+                <p>Comemorando o "Sim"! Fotos para marcar esse novo capítulo incrível das nossas vidas.</p>
+            </div>
+        </div>
+
+        <!-- FOTO 15: SEGUNDA FAMÍLIA (ESQUERDA) -->
+        <div class="timeline-item left">
+            <div class="content" onclick="openModal(this)" data-message="Sou muito grato por ter vocês na minha vida.">
+                <span class="date">Família</span>
+                <img src="foto 15.jpeg" class="memory-img" alt="Segunda Família">
+                <h2>Minha Segunda Família</h2>
+                <p>Compartilhando nossa felicidade com minha segunda família. O apoio de vocês é tudo.</p>
+            </div>
+        </div>
+
+        <!-- FOTO 16: CASAMENTO DA PRIMA (DIREITA) -->
+        <div class="timeline-item right">
+            <div class="content" onclick="openModal(this)" data-message="Prometo treinar uns passos para dançar muito no nosso!">
+                <span class="date">Festa em Família</span>
+                <img src="foto 16.jpeg" class="memory-img" alt="Casamento Prima">
+                <h2>Casamento da Prima</h2>
+                <p>Estávamos lindos para a foto! Mas prometo que na próxima vou me soltar mais e dançar muito com você.</p>
+            </div>
+        </div>
+
+        <!-- FOTO 17: NATAL (ESQUERDA) -->
+        <div class="timeline-item left">
+            <div class="content" onclick="openModal(this)" data-message="Você ama o Natal e eu amo ver você feliz (e amo bife a parmegiana também rs).">
+                <span class="date">Clima Natalino</span>
+                <img src="foto 17.jpeg" class="memory-img" alt="Natal">
+                <h2>Luzes & Parmegiana</h2>
+                <p>Aproveitando as decorações de Natal que você tanto ama, num restaurante com um bife à parmegiana inesquecível!</p>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- SECÇÃO ESPECIAL DO PEDIDO (O GRANDE FINALE) -->
+    <section id="proposal-section">
+        <h2 style="font-family: 'Dancing Script'; font-size: 3rem; color: var(--ouro-premium); margin-bottom: 20px;">O Grande Momento</h2>
+        <p style="font-size: 1.2rem; color: #666; margin-bottom: 30px;">O dia em que o nosso "para sempre" começou oficialmente.</p>
+        
+        <!-- Botão para abrir o vídeo -->
+        <button class="proposal-btn" onclick="openVideo()">Ver o Pedido de Casamento 💍</button>
+    </section>
+
+    <!-- NOSTALGIA & CARTA -->
+    <section id="nostalgia">
+        <h2 style="font-family: 'Dancing Script'; color: var(--cor-primaria); font-size: 2.8rem; margin-bottom: 20px;">Uma toque de amor do meu jeito</h2>
+        <p style="font-size: 1.2rem; color: #666;">Um recado Especial para você... ❤️</p>
+        
+        <div class="woody-container">
+            <img src="https://media.tenor.com/t3g4y4r9a4kAAAAM/woody-woodpecker-pica-pau.gif" class="woody-img" alt="Pica Pau">
+        </div>
+
+        <!-- Botão para abrir a carta -->
+        <button class="letter-btn" onclick="openLetter()">Ler Carta Especial 💌</button>
+    </section>
+
+    <!-- OVERLAY DO VÍDEO (ESCONDIDA POR PADRÃO) -->
+    <div id="videoOverlay" class="modal-overlay" onclick="closeVideo()">
+        <div class="video-box" onclick="event.stopPropagation()">
+            <h2 style="color: var(--ouro-premium); font-family: 'Dancing Script'; margin-bottom: 15px;">Ela disse SIM! 💍</h2>
+            
+            <video controls class="full-screen-video">
+                <source src="video do pedido 2.mp4" type="video/mp4">
+                Seu navegador não suporta vídeo.
+            </video>
+            
+            <!-- RECADO EM BAIXO DO VÍDEO -->
+            <p style="margin-top: 20px; font-size: 1.1rem; color: #555; line-height: 1.5;">
+                O momento mais nervoso da minha vida! E depois do seu "SIM", senti o abraço mais gostoso do mundo. Prometo te fazer feliz todos os dias.
+            </p>
+            
+            <button onclick="closeVideo()" style="margin-top: 20px; padding: 10px 30px; background: var(--ouro-premium); color: white; border: none; border-radius: 20px; cursor: pointer; font-weight: bold;">Fechar</button>
+        </div>
+    </div>
+
+    <!-- OVERLAY DA CARTA -->
+    <div id="letterOverlay">
+        <div class="love-letter">
+            <h3 style="font-family: 'Dancing Script'; color: #e91e63; font-size: 2rem; margin-bottom: 20px;">Para o Amor da Minha Vida</h3>
+            
+            <div class="letter-text">
+Minha querida,
+
+Escrevo isso para te lembrar o quanto você é especial e maravilhosa na minha vida e o quanto te amo. Desde aquela academia até hoje, cada dia com você tem sido uma aventura maravilhosa e um desafio, mas o desafio mais gostoso da minha vida: ser melhor e aprender com você. Contigo tudo fica melhor.
+
+Mal posso esperar para construir nossa família e vivermos felizes para sempre. Eu te amo mais do que as palavras podem dizer, e eu escolherei você sempre. Você é a cor e o sabor da minha vida, com você tudo faz mais sentido e tudo é mais gostoso.
+
+Com amor,
+Seu Noivo.
+            </div>
+            
+            <span class="close-letter" onclick="closeLetter()">Fechar Carta</span>
+        </div>
+    </div>
+
+    <!-- FIM -->
+    <section id="ending">
+        <h2 class="final-msg">Te amo, minha Noiva! ❤️</h2>
+        <p style="font-size: 1.5rem; color: #555;">Obrigado por escrever essa história comigo.</p>
+    </section>
+
+    <!-- MODAL MENSAGENS -->
+    <div id="modalOverlay" class="modal-overlay" onclick="closeModal()">
+        <div class="modal-box" onclick="event.stopPropagation()">
+            <span style="font-size: 3rem;">💌</span>
+            <p id="modalText" style="font-size: 1.2rem; margin-top: 15px; color: #555;"></p>
+            <button onclick="closeModal()" style="margin-top: 20px; padding: 10px 20px; background: var(--cor-primaria); color: white; border: none; border-radius: 20px; cursor: pointer;">Fechar</button>
+        </div>
+    </div>
+
+    <script>
+        // CONFIGURAÇÃO DATA NAMORO: 20/06/2024
+        const dataInicio = new Date(2024, 5, 20, 0, 0); 
+
+        function atualizar() {
+            const agora = new Date();
+            
+            let anos = agora.getFullYear() - dataInicio.getFullYear();
+            let meses = agora.getMonth() - dataInicio.getMonth();
+            let dias = agora.getDate() - dataInicio.getDate();
+            
+            // Horários
+            let horas = agora.getHours() - dataInicio.getHours();
+            let minutos = agora.getMinutes() - dataInicio.getMinutes();
+            let segundos = agora.getSeconds() - dataInicio.getSeconds();
+
+            // Ajuste de tempo negativo
+            if (segundos < 0) { segundos += 60; minutos--; }
+            if (minutos < 0) { minutos += 60; horas--; }
+            if (horas < 0) { horas += 24; dias--; }
+
+            // Ajuste de dias/meses negativos
+            if (dias < 0) {
+                meses--;
+                const ultimoDiaMesAnterior = new Date(agora.getFullYear(), agora.getMonth(), 0).getDate();
+                dias += ultimoDiaMesAnterior;
+            }
+            if (meses < 0) {
+                anos--;
+                meses += 12;
+            }
+
+            document.getElementById('anos').innerText = anos;
+            document.getElementById('meses').innerText = meses;
+            document.getElementById('dias').innerText = dias;
+            document.getElementById('horas').innerText = horas;
+            document.getElementById('minutos').innerText = minutos;
+            document.getElementById('segundos').innerText = segundos;
+        }
+        setInterval(atualizar, 1000); atualizar();
+
+        function scrollToCounter() { document.getElementById('contador-section').scrollIntoView({behavior:'smooth'}); }
+        function scrollToTimeline() { document.getElementById('timeline').scrollIntoView({behavior:'smooth'}); }
+
+        // Animação Scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+        }, {threshold: 0.2});
+        document.querySelectorAll('.timeline-item').forEach(i => observer.observe(i));
+
+        // Modal Mensagens
+        function openModal(el) {
+            document.getElementById('modalText').innerText = el.getAttribute('data-message');
+            document.getElementById('modalOverlay').style.display = 'flex';
+        }
+        function closeModal() { 
+            document.getElementById('modalOverlay').style.display = 'none'; 
+        }
+
+        // Funções da Carta
+        function openLetter() {
+            document.getElementById('letterOverlay').style.display = 'flex';
+        }
+        function closeLetter() {
+            document.getElementById('letterOverlay').style.display = 'none';
+        }
+
+        // Funções do Vídeo
+        function openVideo() {
+            document.getElementById('videoOverlay').style.display = 'flex';
+        }
+        function closeVideo() {
+            document.getElementById('videoOverlay').style.display = 'none';
+            // Pausa o vídeo ao fechar
+            const videos = document.getElementsByTagName('video');
+            for(let i=0; i<videos.length; i++) { videos[i].pause(); }
+        }
+    </script>
+</body>
+</html>

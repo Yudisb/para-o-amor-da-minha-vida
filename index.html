@@ -107,15 +107,16 @@
             color: var(--cor-primaria);
         }
 
-        /* TIMELINE - AGORA IGUAL AO CELULAR EM TODOS OS DISPOSITIVOS */
+        /* TIMELINE - ZIG ZAG EM TUDO */
         #timeline {
             position: relative;
-            padding: 80px 20px;
-            max-width: 800px; /* Largura máxima controlada para não esticar demais no PC */
+            padding: 80px 0; /* Padding lateral zero para dar espaço no mobile */
+            max-width: 1200px;
             margin: 0 auto;
+            width: 100%;
         }
 
-        /* Linha Vertical - Fixa na Esquerda */
+        /* Linha Vertical - SEMPRE NO MEIO */
         #timeline::after {
             content: '';
             position: absolute;
@@ -123,26 +124,24 @@
             background-color: var(--cor-secundaria);
             top: 0;
             bottom: 0;
-            left: 31px; /* Posição fixa à esquerda (estilo mobile) */
-            margin-left: 0;
+            left: 50%;
+            margin-left: -2px;
         }
 
         .timeline-item {
             padding: 10px 40px;
             position: relative;
-            width: 100%; /* Ocupa toda a largura disponível */
+            width: 50%; /* Sempre 50% para fazer o zig zag */
             opacity: 0;
             transform: translateY(50px);
             transition: all 0.8s ease-out;
             margin-bottom: 30px;
-            padding-left: 70px; /* Espaço para a linha e o ícone */
-            padding-right: 25px;
         }
         .timeline-item.visible { opacity: 1; transform: translateY(0); }
 
-        /* Removemos o posicionamento alternado (left/right) */
+        /* Posicionamento Esquerda/Direita */
         .left { left: 0; }
-        .right { left: 0; }
+        .right { left: 50%; }
 
         /* Ícone na Linha (Coração) */
         .timeline-item::after {
@@ -150,8 +149,6 @@
             position: absolute;
             width: 30px;
             height: 30px;
-            left: 15px; /* Alinhado com a linha à esquerda */
-            right: auto;
             background-color: white;
             border: 4px solid var(--cor-primaria);
             top: 25px;
@@ -161,10 +158,14 @@
             align-items: center;
             justify-content: center;
             font-size: 12px;
+            right: -17px;
         }
-        
-        /* Ajuste para garantir que classes antigas não atrapalhem */
-        .right::after { left: 15px; }
+
+        /* Ajuste do ícone para itens da direita */
+        .right::after { 
+            left: -17px; 
+            right: auto;
+        }
 
         .content {
             padding: 20px;
@@ -188,7 +189,7 @@
 
         .memory-img {
             width: 100%;
-            height: 300px;
+            height: 250px; /* Reduzi levemente a altura padrão para caber melhor no mobile */
             object-fit: contain;
             border-radius: 10px;
             margin-bottom: 15px;
@@ -329,7 +330,7 @@
         #ending { text-align: center; padding: 100px 20px; }
         .final-msg { font-size: 3rem; color: var(--cor-primaria); animation: pulse 2s infinite; }
 
-        /* Ajuste do ícone do anel para ficar alinhado */
+        /* Ajuste do ícone do anel */
         .timeline-item.proposal::after {
             content: '💍';
             font-size: 18px;
@@ -337,17 +338,45 @@
             border-color: var(--dourado);
             width: 40px;
             height: 40px;
-            left: 10px;
+            left: -20px; 
             right: auto;
             top: 20px;
             box-shadow: 0 0 10px var(--dourado);
             animation: pulse-gold 2s infinite;
         }
-        .right.proposal::after { left: 10px; }
 
+        /* ========================================
+           AJUSTES ESPECÍFICOS PARA CELULAR (ZIG ZAG APERTADO)
+           ======================================== */
         @media screen and (max-width: 768px) {
             .main-title { font-size: 2.5rem; }
-            .letter-text { font-size: 1.4rem; }
+            
+            /* No celular, reduzimos o padding para caber o zig zag */
+            .timeline-item {
+                padding: 10px 10px; /* Menos espaço lateral */
+            }
+            
+            /* Ajuste da bolinha do coração para mobile */
+            .timeline-item::after {
+                width: 20px;
+                height: 20px;
+                right: -12px;
+                top: 20px;
+            }
+            .right::after {
+                left: -12px;
+                right: auto;
+            }
+            
+            /* Conteúdo mais compacto */
+            .content {
+                padding: 15px;
+            }
+            .content h2 { font-size: 1.2rem; }
+            .content p { font-size: 0.9rem; }
+            .memory-img { height: 150px; } /* Fotos menores no celular */
+            
+            .letter-text { font-size: 1.2rem; }
         }
 
         @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
@@ -386,7 +415,7 @@
     <section id="timeline">
         
         <!-- FOTO 1: ACADEMIA -->
-        <div class="timeline-item">
+        <div class="timeline-item left">
             <div class="content" onclick="openModal(this)" data-message="Foi aqui que nossos olhares se cruzaram pela primeira vez. Quem diria que a academia me daria o maior presente da vida?">
                 <span class="date">Onde Tudo Começou</span>
                 <img src="foto 1.jpeg" class="memory-img" alt="Academia">
@@ -397,10 +426,9 @@
         </div>
 
         <!-- NOVO: CAFÉ EM BELÉM -->
-        <div class="timeline-item">
+        <div class="timeline-item right">
             <div class="content" onclick="openModal(this)" data-message="Apresentando a minha cidade para você logo cedo!">
                 <span class="date">Manhã em Belém</span>
-                <!-- Nome do arquivo deve ser igual na pasta -->
                 <img src="cafe_belem.jpg" class="memory-img" alt="Café em Belém">
                 <h2>Café da Manhã Especial</h2>
                 <p>Saímos cedo para tomar café numa cafeteria e eu te apresentar Belém.</p>
@@ -408,7 +436,7 @@
         </div>
 
         <!-- FOTO 3: BOI DE OURO -->
-        <div class="timeline-item">
+        <div class="timeline-item left">
             <div class="content" onclick="openModal(this)" data-message="Comer bem já é bom, mas comer bem ao seu lado é perfeito!">
                 <span class="date">Momentos Deliciosos</span>
                 <img src="foto 3.jpeg" class="memory-img" alt="Boi de Ouro">
@@ -418,7 +446,7 @@
         </div>
 
         <!-- FOTO 4: SURPRESA ANA LUIZA -->
-        <div class="timeline-item">
+        <div class="timeline-item right">
             <div class="content" onclick="openModal(this)" data-message="A gente se vira nos 30 e ainda sai rindo. Parceria é isso!">
                 <span class="date">A "Surpresa"</span>
                 <img src="foto 4.jpeg" class="memory-img" alt="Surpresa Ana Luiza">
@@ -428,7 +456,7 @@
         </div>
 
         <!-- FOTO 5: ALEATÓRIO -->
-        <div class="timeline-item">
+        <div class="timeline-item left">
             <div class="content" onclick="openModal(this)" data-message="Amo até nossos momentos mais aleatórios.">
                 <span class="date">Simplesmente Nós</span>
                 <img src="foto 5.jpeg" class="memory-img" alt="Momento Aleatório">
@@ -438,7 +466,7 @@
         </div>
 
         <!-- FOTO 6: MARUDÁ -->
-        <div class="timeline-item">
+        <div class="timeline-item right">
             <div class="content" onclick="openModal(this)" data-message="A primeira de muitas viagens que ainda faremos pelo mundo.">
                 <span class="date">Pé na Estrada</span>
                 <img src="foto 6.jpg" class="memory-img" alt="Viagem Marudá">
@@ -448,7 +476,7 @@
         </div>
 
         <!-- NOVO: OUTBACK ANIVERSÁRIO -->
-        <div class="timeline-item">
+        <div class="timeline-item left">
             <div class="content" onclick="openModal(this)" data-message="Você merece o mundo (e a melhor sobremesa dele)!">
                 <span class="date">Seu Aniversário</span>
                 <img src="outback.jpg" class="memory-img" alt="Outback">
@@ -458,7 +486,7 @@
         </div>
 
         <!-- NOVO: HALLOWEEN -->
-        <div class="timeline-item">
+        <div class="timeline-item right">
             <div class="content" onclick="openModal(this)" data-message="Amo quando entramos na brincadeira juntos!">
                 <span class="date">Dia das Bruxas</span>
                 <img src="halloween.jpg" class="memory-img" alt="Halloween">
@@ -468,7 +496,7 @@
         </div>
 
         <!-- NOVO: FEIRA JAPONESA -->
-        <div class="timeline-item">
+        <div class="timeline-item left">
             <div class="content" onclick="openModal(this)" data-message="Experimentando novos sabores com você.">
                 <span class="date">Cultura e Sabor</span>
                 <img src="feira_japonesa.jpg" class="memory-img" alt="Feira Japonesa">
@@ -478,7 +506,7 @@
         </div>
 
         <!-- NOVO: CORRIDA -->
-        <div class="timeline-item">
+        <div class="timeline-item right">
             <div class="content" onclick="openModal(this)" data-message="Eu tava forte nesse dia hein? Kkkk">
                 <span class="date">Vida Fitness</span>
                 <img src="corrida.jpg" class="memory-img" alt="Corrida">
@@ -488,7 +516,7 @@
         </div>
 
         <!-- FOTO 7: SALINAS (DESCANSO) -->
-        <div class="timeline-item">
+        <div class="timeline-item left">
             <div class="content" onclick="openModal(this)" data-message="Aquele momento de paz e descanso ao seu lado.">
                 <span class="date">Relax em Salinas</span>
                 <img src="foto 7.jpeg" class="memory-img" alt="Salinas Descanso">
@@ -498,7 +526,7 @@
         </div>
 
         <!-- FOTO 8: SALINAS (PIZZA) -->
-        <div class="timeline-item">
+        <div class="timeline-item right">
             <div class="content" onclick="openModal(this)" data-message="A pizza era meio caro, mas a sua companhia não tem preço! Hehe.">
                 <span class="date">Final de Ano</span>
                 <img src="foto 8.jpeg" class="memory-img" alt="Salinas Pizza">
@@ -508,7 +536,7 @@
         </div>
 
         <!-- FOTO 9: RIO GRANDE DO NORTE (SEREIA) -->
-        <div class="timeline-item">
+        <div class="timeline-item left">
             <div class="content" onclick="openModal(this)" data-message="Você estava deslumbrante, parecia uma sereia de verdade. Te amo!">
                 <span class="date">Paraíso no Nordeste</span>
                 <img src="foto 9.jpeg" class="memory-img" alt="RN Sereia">
@@ -518,7 +546,7 @@
         </div>
 
         <!-- FOTO 10: RIO GRANDE DO NORTE (FOFOS) -->
-        <div class="timeline-item">
+        <div class="timeline-item right">
             <div class="content" onclick="openModal(this)" data-message="Momentos simples e cheios de carinho com você.">
                 <span class="date">Nós Dois</span>
                 <img src="foto 10.jpeg" class="memory-img" alt="Nós Fofos">
@@ -528,7 +556,7 @@
         </div>
 
         <!-- NOVO: RESTAURANTE TEMÁTICO RN -->
-        <div class="timeline-item">
+        <div class="timeline-item left">
             <div class="content" onclick="openModal(this)" data-message="Lugares incríveis com a companhia perfeita.">
                 <span class="date">Turistando</span>
                 <img src="tematico_rn.jpg" class="memory-img" alt="Restaurante Temático">
@@ -538,7 +566,7 @@
         </div>
 
         <!-- FOTO 11: FORTALEZA -->
-        <div class="timeline-item">
+        <div class="timeline-item right">
             <div class="content" onclick="openModal(this)" data-message="A gente se diverte até com estátuas! Hahaha">
                 <span class="date">Beach Park - Fortaleza</span>
                 <img src="foto 11.jpeg" class="memory-img" alt="Beach Park Gorila">
@@ -548,7 +576,7 @@
         </div>
 
         <!-- FOTO 12: CURITIBA -->
-        <div class="timeline-item">
+        <div class="timeline-item left">
             <div class="content" onclick="openModal(this)" data-message="Se eu soubesse o que aconteceria nessa viagem... meu coração já estava batendo diferente.">
                 <span class="date">Curitiba</span>
                 <img src="foto 12.jpeg" class="memory-img" alt="Jardim Botânico Curitiba">
@@ -558,7 +586,7 @@
         </div>
 
         <!-- FOTO 13/14: ENFIM NOIVOS -->
-        <div class="timeline-item">
+        <div class="timeline-item right">
             <div class="content" onclick="openModal(this)" data-message="Agora é oficial: vamos casar! Te amo demais.">
                 <span class="date">O Grande Sim</span>
                 <img src="foto 14.jpeg" class="memory-img" alt="Enfim Noivos">
@@ -568,7 +596,7 @@
         </div>
 
         <!-- FOTO 15: SEGUNDA FAMÍLIA -->
-        <div class="timeline-item">
+        <div class="timeline-item left">
             <div class="content" onclick="openModal(this)" data-message="Sou muito grato por ter vocês na minha vida.">
                 <span class="date">Família</span>
                 <img src="foto 15.jpeg" class="memory-img" alt="Segunda Família">
@@ -578,7 +606,7 @@
         </div>
 
         <!-- FOTO 16: CASAMENTO DA PRIMA -->
-        <div class="timeline-item">
+        <div class="timeline-item right">
             <div class="content" onclick="openModal(this)" data-message="Prometo treinar uns passos para dançar muito no nosso!">
                 <span class="date">Festa em Família</span>
                 <img src="foto 16.jpeg" class="memory-img" alt="Casamento Prima">
@@ -588,7 +616,7 @@
         </div>
 
         <!-- FOTO 17: NATAL -->
-        <div class="timeline-item">
+        <div class="timeline-item left">
             <div class="content" onclick="openModal(this)" data-message="Você ama o Natal e eu amo ver você feliz (e amo bife a parmegiana também rs).">
                 <span class="date">Clima Natalino</span>
                 <img src="foto 17.jpeg" class="memory-img" alt="Natal">

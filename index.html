@@ -107,11 +107,11 @@
             color: var(--cor-primaria);
         }
 
-        /* TIMELINE */
+        /* TIMELINE - AJUSTADA PARA ESTILO MOBILE NO PC */
         #timeline {
             position: relative;
             padding: 80px 20px;
-            max-width: 1200px;
+            max-width: 800px; /* Reduzi um pouco a largura máxima para leitura melhor */
             margin: 0 auto;
         }
 
@@ -122,30 +122,38 @@
             background-color: var(--cor-secundaria);
             top: 0;
             bottom: 0;
-            left: 50%;
-            margin-left: -2px;
+            /* LINHA NA ESQUERDA PARA TODOS */
+            left: 31px; 
+            margin-left: 0;
         }
 
         .timeline-item {
             padding: 10px 40px;
             position: relative;
-            width: 50%;
+            /* LARGURA TOTAL PARA TODOS */
+            width: 100%; 
             opacity: 0;
             transform: translateY(50px);
             transition: all 0.8s ease-out;
             margin-bottom: 30px;
+            /* PADDING PARA AFASTAR DA LINHA NA ESQUERDA */
+            padding-left: 70px;
+            padding-right: 25px;
         }
         .timeline-item.visible { opacity: 1; transform: translateY(0); }
 
+        /* Removemos a lógica de esquerda/direita do PC */
         .left { left: 0; }
-        .right { left: 50%; }
+        .right { left: 0; }
 
         .timeline-item::after {
             content: '❤️';
             position: absolute;
             width: 30px;
             height: 30px;
-            right: -17px;
+            /* PONTO NA ESQUERDA PARA TODOS */
+            left: 15px;
+            right: auto;
             background-color: white;
             border: 4px solid var(--cor-primaria);
             top: 25px;
@@ -156,7 +164,7 @@
             justify-content: center;
             font-size: 12px;
         }
-        .right::after { left: -17px; }
+        .right::after { left: 15px; }
 
         .content {
             padding: 20px;
@@ -321,14 +329,25 @@
         #ending { text-align: center; padding: 100px 20px; }
         .final-msg { font-size: 3rem; color: var(--cor-primaria); animation: pulse 2s infinite; }
 
+        /* Ajuste do ícone do anel para ficar alinhado */
+        .timeline-item.proposal::after {
+            content: '💍';
+            font-size: 18px;
+            background-color: #fffbe6;
+            border-color: var(--dourado);
+            width: 40px;
+            height: 40px;
+            left: 10px;
+            right: auto;
+            top: 20px;
+            box-shadow: 0 0 10px var(--dourado);
+            animation: pulse-gold 2s infinite;
+        }
+        .right.proposal::after { left: 10px; }
+
         @media screen and (max-width: 768px) {
             .main-title { font-size: 2.5rem; }
-            #timeline::after { left: 31px; }
-            .timeline-item { width: 100%; padding-left: 70px; padding-right: 15px; }
-            .timeline-item::after { left: 15px; }
-            .left::after, .right::after { left: 15px; }
-            .right { left: 0%; }
-            .timeline-item.proposal::after { left: 11px; }
+            /* O CSS principal já está estilo mobile, mas mantemos ajustes finos */
             .letter-text { font-size: 1.4rem; }
         }
 
@@ -380,22 +399,22 @@
 
         <!-- NOVO: CAFÉ EM BELÉM -->
         <div class="timeline-item right">
-            <div class="content" onclick="openModal(this)" data-message="Conhecendo Belém com a melhor companhia!">
+            <div class="content" onclick="openModal(this)" data-message="Apresentando a minha cidade para você logo cedo!">
                 <span class="date">Manhã em Belém</span>
                 <!-- Nome do arquivo deve ser igual na pasta -->
-                <img src="cafe_belem.jpeg" class="memory-img" alt="Café em Belém">
+                <img src="cafe_belem.jpg" class="memory-img" alt="Café em Belém">
                 <h2>Café da Manhã Especial</h2>
-                <p>Saímos cedo para tomar café numa cafeteria e vocÊ me apresentar Belém.</p>
+                <p>Saímos cedo para tomar café numa cafeteria e eu te apresentar Belém.</p>
             </div>
         </div>
 
         <!-- FOTO 3: BOI DE OURO -->
         <div class="timeline-item left">
-            <div class="content" onclick="openModal(this)" data-message="As melhores risadas sempre são com você!">
-                <span class="date">BOI DE OURO</span>
+            <div class="content" onclick="openModal(this)" data-message="Comer bem já é bom, mas comer bem ao seu lado é perfeito!">
+                <span class="date">Momentos Deliciosos</span>
                 <img src="foto 3.jpeg" class="memory-img" alt="Boi de Ouro">
                 <h2>Jantar no Boi de Ouro</h2>
-                <p>Esse dia foi difícil tirar uma foto descente.</p>
+                <p>A gente feliz depois de comer muito bem! Nossos momentos gastronômicos são os melhores.</p>
             </div>
         </div>
 
@@ -411,11 +430,11 @@
 
         <!-- FOTO 5: ALEATÓRIO -->
         <div class="timeline-item left">
-            <div class="content" onclick="openModal(this)" data-message="Espeor que nossos filhos tenha seus olhos.">
-                <span class="date">Seus lindos olhos</span>
+            <div class="content" onclick="openModal(this)" data-message="Amo até nossos momentos mais aleatórios.">
+                <span class="date">Simplesmente Nós</span>
                 <img src="foto 5.jpeg" class="memory-img" alt="Momento Aleatório">
-                <h2>Olhos Lindos</h2>
-                <p>Os olhos mais lindo que eu já vi👀.</p>
+                <h2>Momentos Espontâneos</h2>
+                <p>Um registro aleatório, mas cheio de carinho. Porque todo momento com você conta.</p>
             </div>
         </div>
 
@@ -433,9 +452,9 @@
         <div class="timeline-item left">
             <div class="content" onclick="openModal(this)" data-message="Você merece o mundo (e a melhor sobremesa dele)!">
                 <span class="date">Seu Aniversário</span>
-                <img src="outback.jpeg" class="memory-img" alt="Outback">
+                <img src="outback.jpg" class="memory-img" alt="Outback">
                 <h2>Comemorando no Outback</h2>
-                <p>Resolvi te levar para o Outback conhecer e te mostrar a melhor sobremesa do mundo para mim: a Thunder!</p>
+                <p>Resolvi te levar para conhecer e te mostrar a melhor sobremesa do mundo para mim: a Thunder!</p>
             </div>
         </div>
 
@@ -443,7 +462,7 @@
         <div class="timeline-item right">
             <div class="content" onclick="openModal(this)" data-message="Amo quando entramos na brincadeira juntos!">
                 <span class="date">Dia das Bruxas</span>
-                <img src="halloween.jpeg" class="memory-img" alt="Halloween">
+                <img src="halloween.jpg" class="memory-img" alt="Halloween">
                 <h2>McQueen e Sally</h2>
                 <p>A gente resolveu se vestir a caráter porque você sabe que eu gosto muito de fazer essas coisas de casal.</p>
             </div>
@@ -453,7 +472,7 @@
         <div class="timeline-item left">
             <div class="content" onclick="openModal(this)" data-message="Experimentando novos sabores com você.">
                 <span class="date">Cultura e Sabor</span>
-                <img src="feira_japonesa.jpeg" class="memory-img" alt="Feira Japonesa">
+                <img src="feira_japonesa.jpg" class="memory-img" alt="Feira Japonesa">
                 <h2>Feira Japonesa em Belém</h2>
                 <p>Fomos comer Karega. Era bom, mas não igual ao do Japão né?</p>
             </div>
@@ -461,9 +480,9 @@
 
         <!-- NOVO: CORRIDA -->
         <div class="timeline-item right">
-            <div class="content" onclick="openModal(this)" data-message="Eu tava forte né? Kkkk">
+            <div class="content" onclick="openModal(this)" data-message="Eu tava forte nesse dia hein? Kkkk">
                 <span class="date">Vida Fitness</span>
-                <img src="corrida.jpeg" class="memory-img" alt="Corrida">
+                <img src="corrida.jpg" class="memory-img" alt="Corrida">
                 <h2>Correndo com os Primos</h2>
                 <p>Nesse dia não quis pagar pela bike, então corri demais! E eu estava forte, né?</p>
             </div>
@@ -473,7 +492,7 @@
         <div class="timeline-item left">
             <div class="content" onclick="openModal(this)" data-message="Aquele momento de paz e descanso ao seu lado.">
                 <span class="date">Relax em Salinas</span>
-                <img src="foto 8.jpeg" class="memory-img" alt="Salinas Descanso">
+                <img src="foto 7.jpeg" class="memory-img" alt="Salinas Descanso">
                 <h2>Aquele Descanso</h2>
                 <p>Momentos de tranquilidade para recarregar as energias. Salinas sempre nos traz boas memórias.</p>
             </div>
@@ -483,9 +502,9 @@
         <div class="timeline-item right">
             <div class="content" onclick="openModal(this)" data-message="A pizza era meio caro, mas a sua companhia não tem preço! Hehe.">
                 <span class="date">Final de Ano</span>
-                <img src="foto 7.jpeg" class="memory-img" alt="Salinas Pizza">
+                <img src="foto 8.jpeg" class="memory-img" alt="Salinas Pizza">
                 <h2>A Pizza de Milhões</h2>
-                <p>O jantar com a pizza maravilhosa (mas não muito barata! rs)./p>
+                <p>O jantar com a pizza maravilhosa (mas não muito barata! rs). Histórias que a gente ri depois.</p>
             </div>
         </div>
 
@@ -494,8 +513,8 @@
             <div class="content" onclick="openModal(this)" data-message="Você estava deslumbrante, parecia uma sereia de verdade. Te amo!">
                 <span class="date">Paraíso no Nordeste</span>
                 <img src="foto 9.jpeg" class="memory-img" alt="RN Sereia">
-                <h2>Praia calma no Rio Grande do Norte</h2>
-                <p>Praias lindas, mas nada supera sua beleza.</p>
+                <h2>Sereia no Rio Grande do Norte</h2>
+                <p>Praias lindas, mas nada superou você parecendo uma sereia.</p>
             </div>
         </div>
 
@@ -513,7 +532,7 @@
         <div class="timeline-item left">
             <div class="content" onclick="openModal(this)" data-message="Lugares incríveis com a companhia perfeita.">
                 <span class="date">Turistando</span>
-                <img src="tematico_rn.jpeg" class="memory-img" alt="Restaurante Temático">
+                <img src="tematico_rn.jpg" class="memory-img" alt="Restaurante Temático">
                 <h2>Restaurante Temático</h2>
                 <p>Ainda no Rio Grande do Norte, fomos naquele restaurante famoso temático que tem lá.</p>
             </div>
@@ -525,7 +544,7 @@
                 <span class="date">Beach Park - Fortaleza</span>
                 <img src="foto 11.jpeg" class="memory-img" alt="Beach Park Gorila">
                 <h2>Nós e o Gorila</h2>
-                <p>Em Fortaleza, no Beach Park, vimos esse gorila e eu não resisti.!</p>
+                <p>Em Fortaleza, no Beach Park, vimos esse gorila e não resistimos. Diversão pura ao seu lado!</p>
             </div>
         </div>
 
@@ -539,7 +558,7 @@
             </div>
         </div>
 
-        <!-- FOTO 13/14: ENFIM NOIVOS (DIREITA) -->
+        <!-- FOTO 13/14: ENFIM NOIVOS -->
         <div class="timeline-item right">
             <div class="content" onclick="openModal(this)" data-message="Agora é oficial: vamos casar! Te amo demais.">
                 <span class="date">O Grande Sim</span>
@@ -549,7 +568,7 @@
             </div>
         </div>
 
-        <!-- FOTO 15: SEGUNDA FAMÍLIA (ESQUERDA) -->
+        <!-- FOTO 15: SEGUNDA FAMÍLIA -->
         <div class="timeline-item left">
             <div class="content" onclick="openModal(this)" data-message="Sou muito grato por ter vocês na minha vida.">
                 <span class="date">Família</span>
@@ -559,7 +578,7 @@
             </div>
         </div>
 
-        <!-- FOTO 16: CASAMENTO DA PRIMA (DIREITA) -->
+        <!-- FOTO 16: CASAMENTO DA PRIMA -->
         <div class="timeline-item right">
             <div class="content" onclick="openModal(this)" data-message="Prometo treinar uns passos para dançar muito no nosso!">
                 <span class="date">Festa em Família</span>
@@ -569,7 +588,7 @@
             </div>
         </div>
 
-        <!-- FOTO 17: NATAL (ESQUERDA) -->
+        <!-- FOTO 17: NATAL -->
         <div class="timeline-item left">
             <div class="content" onclick="openModal(this)" data-message="Você ama o Natal e eu amo ver você feliz (e amo bife a parmegiana também rs).">
                 <span class="date">Clima Natalino</span>
@@ -610,6 +629,7 @@
             <h2 style="color: var(--ouro-premium); font-family: 'Dancing Script'; margin-bottom: 15px;">Ela disse SIM! 💍</h2>
             
             <video controls class="full-screen-video">
+                <!-- Certifique-se de que o vídeo tem exatamente este nome na pasta -->
                 <source src="video do pedido 2.mp4" type="video/mp4">
                 Seu navegador não suporta vídeo.
             </video>
@@ -646,7 +666,7 @@ Seu Noivo.
     <!-- FIM -->
     <section id="ending">
         <h2 class="final-msg">Te amo, minha Noiva! ❤️</h2>
-        <p style="font-size: 1.5rem; color: #555;">Obrigado por escrever essa história comigo.E infinito e além 🚀.</p>
+        <p style="font-size: 1.5rem; color: #555;">Obrigado por escrever essa história comigo.</p>
     </section>
 
     <!-- MODAL MENSAGENS -->
